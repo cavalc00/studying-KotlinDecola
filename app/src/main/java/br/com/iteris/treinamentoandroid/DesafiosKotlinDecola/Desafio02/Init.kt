@@ -4,12 +4,19 @@ import com.google.gson.Gson
 import java.util.*
 import kotlin.system.exitProcess
 
-fun main(){
+fun main() {
+    Init()
+}
+
+private fun Init() {
     val scan = Scanner(System.`in`)
     var continuar = true
     var op: Int
+    val pedido: MutableList<Prato> = mutableListOf()
+    var pratoTemp: Prato?
 
-    while(continuar){
+    while (continuar) {
+        println("---------------------------")
         println("Escolha uma refeição:")
         println("1 - Picanha")
         println("2 - Alcatra")
@@ -19,36 +26,50 @@ fun main(){
         print("Escolha: ")
 
         op = scan.nextInt()
-        InfoPratos(op)
-        println("Gostaria de fazer outro pedido?")
-        println("1- Sim")
-        println("2 - Não")
-        op = scan.nextInt()
-        if(op == 2) continuar = false
+        pratoTemp = SelecionarPrato(op)
+
+        if (pratoTemp != null) {
+            println("Gostaria de fazer outro pedido?")
+            println("1- Sim")
+            println("2 - Não")
+            op = scan.nextInt()
+            when (op) {
+                1 -> pedido.add(pratoTemp)
+                2 -> {
+                    pedido.add(pratoTemp)
+                    continuar = false
+                }
+                //Depois fazer tratamento aqui caso alguem digite errado
+            }
+        }
     }
+    FecharConta(pedido)
     PreencherFicha()
 }
 
-private fun InfoPratos(op: Int){
-    val prato: Prato
+private fun SelecionarPrato(op: Int): Prato? {
+    var prato: Prato? = null
     val scanner = Scanner(System.`in`)
     var op2 = op
 
-    when(op2){
+    when (op2) {
         1 -> prato = Picanha()
         2 -> prato = Alcatra()
         3 -> prato = Pernil()
         0 -> exitProcess(0)
         else -> {
-            println("Opção inválida, encerrando...")
-            exitProcess(0)
+            println("Opção inválida, tente novamente...")
+            println("---------------------------")
+            Init()
         }
     }
 
+    EscolherAcompanhamento(prato)
+
     println("---------------------------")
-    println("Descrição: ${prato.getDescricao()}")
-    println("Acompanhamento: ${prato.getAcompanhamento()}")
-    println("Valor: ${prato.getValorPrato()}")
+    println("Descrição: ${prato?.getDescricao()}")
+    println("Acompanhamento: ${prato?.acompanhamento}")
+    println("Valor: R$${prato?.getValorPrato()}")
     println("---------------------------")
     println("Gostaria de comer esse prato?")
     println("1 - Sim")
@@ -57,20 +78,66 @@ private fun InfoPratos(op: Int){
     print("Escolha: ")
 
     op2 = scanner.nextInt()
-    when(op2){
+    when (op2) {
         1 -> {
-            prato.Comer()
+            prato?.Comer()
             println("---------------------------")
         }
-        2 -> return;
+        2 -> {
+            Init()
+        }
         else -> {
-            println("Opção inválida, encerrando...")
-            exitProcess(0)
+            println("---------------------------")
+            println("Opção inválida...")
+            SelecionarPrato(op)
+        }
+    }
+    return prato
+}
+
+private fun EscolherAcompanhamento(prato: Prato?) {
+    val op: Int
+    val scanner = Scanner(System.`in`)
+
+    println("Escolha seu acompanhamento:")
+    println("1 - Farofa")
+    println("2 - Arroz")
+    println("3 - Batata")
+    println("4 - Sem Acompanhamento")
+    println("5 - Selecionar outro prato")
+
+    op = scanner.nextInt()
+
+    when (op) {
+        1 -> prato?.getAcompanhamento(op)
+        2 -> prato?.getAcompanhamento(op)
+        3 -> prato?.getAcompanhamento(op)
+        4 -> prato?.getAcompanhamento(op)
+        5 -> Init()
+        else -> {
+            println("---------------------------")
+            println("Opção inválida...")
+            return EscolherAcompanhamento(prato)
         }
     }
 }
 
-private fun PreencherFicha(){
+private fun FecharConta(pedido: MutableList<Prato>) {
+    var valorTotal: Double = 0.0
+
+    for (i in pedido){
+        valorTotal += i.getValorPrato()
+    }
+    println("---------------------------")
+    println("Todos pratos pedidos: ")
+    for (i in pedido){
+        println("Guarnição: ${i.getDescricao()} | Acompanhamento: ${i.acompanhamento} | Valor: ${i.getValorPrato()}")
+    }
+    println("Valor Total: R$  $valorTotal")
+    println("---------------------------")
+}
+
+private fun PreencherFicha() {
     val scan = Scanner(System.`in`)
     val infoCliente: FichaCadastral
     val nome: String
@@ -92,3 +159,4 @@ private fun PreencherFicha(){
     println("Dados cadastrados, obrigado!")
     println("---------------------------")
 }
+

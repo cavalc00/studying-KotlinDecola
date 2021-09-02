@@ -5,7 +5,7 @@ enum class Acompanhamentos {
     ARROZ,
     BATATA;
 
-
+    companion object {
         fun EscoherAcompanhamento(acompanhamentos: Acompanhamentos): String {
             when (acompanhamentos) {
                 FAROFA -> return "Farofa"
@@ -13,4 +13,5 @@ enum class Acompanhamentos {
                 BATATA -> return "Batata"
             }
         }
+    }
 }

@@ -1,10 +1,9 @@
 package br.com.iteris.treinamentoandroid.DesafiosKotlinDecola.Desafio02
 
-class Pernil: Prato(Acompanhamentos.BATATA) {
-    override fun getDescricao(): String = "Pernil com acompanhamento de batata."
+class Pernil: Prato() {
+    override fun getDescricao(): String = "Pernil."
     override fun getValorPrato(): Double = 40.00
     override fun Comer() {
-        println("Pernil com acompanhamento de batata.")
+        println("Comendo Pernil com acompanhamento de $acompanhamento.")
     }
-
 }
