@@ -5,11 +5,12 @@ enum class Acompanhamentos {
     ARROZ,
     BATATA;
 
-    fun EscoherAcompanhamento(acompanhamentos: Acompanhamentos):String{
-        when(acompanhamentos){
-            FAROFA -> return "Farofa"
-            ARROZ -> return "Arroz"
-            BATATA -> return "Batata"
+
+        fun EscoherAcompanhamento(acompanhamentos: Acompanhamentos): String {
+            when (acompanhamentos) {
+                FAROFA -> return "Farofa"
+                ARROZ -> return "Arroz"
+                BATATA -> return "Batata"
+            }
         }
-    }
 }

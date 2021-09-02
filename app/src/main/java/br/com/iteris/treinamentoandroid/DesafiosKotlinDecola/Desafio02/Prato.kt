@@ -5,7 +5,10 @@ abstract class Prato(acompanhamentos: Acompanhamentos):Comer{
      var acompanhamentos: Acompanhamentos = acompanhamentos
         private set
 
-    abstract fun getAcompanhamento(): String
+     fun getAcompanhamento(): String{
+        return acompanhamentos.EscoherAcompanhamento(acompanhamentos)
+     }
+
     abstract fun getDescricao(): String
-    abstract fun getValorPrato(): Double
+    abstract fun getValorPrato(): Double //Pelo metodo que herda esta classe ser obrigado a implementar esse método ele retornará algo, mas pelo fato de não ter um atributo ele não salva esse valor
 }
