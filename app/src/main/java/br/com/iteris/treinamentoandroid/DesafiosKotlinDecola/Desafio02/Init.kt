@@ -39,7 +39,9 @@ private fun Init() {
                     pedido.add(pratoTemp)
                     continuar = false
                 }
-                //Depois fazer tratamento aqui caso alguem digite errado
+                else -> {
+                    println("Opção inválida, fechando a conta...")
+                }
             }
         }
     }
@@ -84,7 +86,10 @@ private fun SelecionarPrato(op: Int): Prato? {
             println("---------------------------")
         }
         2 -> {
+            prato = null
+            println("Voltando para o menu...")
             Init()
+            exitProcess(0)
         }
         else -> {
             println("---------------------------")
@@ -113,7 +118,10 @@ private fun EscolherAcompanhamento(prato: Prato?) {
         2 -> prato?.getAcompanhamento(op)
         3 -> prato?.getAcompanhamento(op)
         4 -> prato?.getAcompanhamento(op)
-        5 -> Init()
+        5 -> {
+            Init()
+            exitProcess(0)
+        }
         else -> {
             println("---------------------------")
             println("Opção inválida...")
@@ -137,7 +145,7 @@ private fun FecharConta(pedido: MutableList<Prato>) {
     println("---------------------------")
 }
 
-private fun PreencherFicha() {
+private fun PreencherFicha(){
     val scan = Scanner(System.`in`)
     val infoCliente: FichaCadastral
     val nome: String
