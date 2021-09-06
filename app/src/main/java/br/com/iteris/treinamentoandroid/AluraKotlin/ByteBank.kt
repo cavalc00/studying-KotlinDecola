@@ -1,9 +1,15 @@
 package br.com.iteris.treinamentoandroid.AluraKotlin
 
+import kotlin.time.seconds
+
 fun main() {
 
+    val conta = Conta()
+
+    conta.saldo = 12.0
 
 
+    println(conta.saldo)
 
 
 
@@ -13,7 +19,11 @@ fun main() {
 }
 
 class Conta(){
-
+    var saldo = 0.0
+        set(value){
+            if(value > 0)
+            field = value
+        }
 }
 
 
